@@ -48,6 +48,8 @@ class ViewController: UIViewController {
         let cellOffsetX = cellWidth / 2
         let cellOffsetY = cellHeight / 2
         
+        view.backgroundColor = UIColor(red: 255, green: 255, blue: 240, alpha: 1.0)
+        
         for y in 0 ..< maze.count {
             for x in 0 ..< maze[y].count{
                 switch maze [y][x]{
@@ -56,10 +58,12 @@ class ViewController: UIViewController {
                     wallView.backgroundColor = UIColor.black
                     view.addSubview(wallView)
                     wallRectArray.append(wallView.frame)
+                    
                 case 2:  //スタート地点
                     startView = createView(x: x, y: y, width: cellWidth, height: cellHeight, offsetX: cellOffsetX, offsetY: cellOffsetY)
                     startView.backgroundColor = UIColor.green
                     view.addSubview(startView)
+                    
                 case 3: //ゴール地点
                     goalView = createView(x: x, y: y, width: cellWidth, height: cellHeight, offsetX: cellOffsetX, offsetY: cellOffsetY)
                     goalView.backgroundColor = UIColor.red
@@ -87,7 +91,7 @@ class ViewController: UIViewController {
         let rect = CGRect(x: 0, y: 0, width: width, height: height)
         let view = UIView(frame: rect)
         
-        let center = CGPoint(x: offsetX + width * CGFloat(x), y: offsetY + width * CGFloat(y))
+        let center = CGPoint(x: offsetX + width * CGFloat(x), y: offsetY + height * CGFloat(y))
         
         view.center = center
         
@@ -133,6 +137,7 @@ class ViewController: UIViewController {
             
             self.playerView.center = CGPoint(x:posX, y: posY)
         }
+        playerMotionManager.startAccelerometerUpdates(to: OperationQueue.main, withHandler: handler)
     }
     
     func gameCheck(result: String, message: String){
